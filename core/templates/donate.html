@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Donate Hero -->
+<section class="donate-hero">
+  <div class="donate-content">
+    <h1>Make a Difference Today</h1>
+    <p>Your small contribution can bring a big change in someone's life ❤️</p>
+  </div>
+</section>
+
+<!-- Donation Form -->
+<section class="donation-form">
+  <h2>Support Mayank Care Foundation</h2>
+  <p>Select an amount or enter your own:</p>
+
+  <!-- Amount Buttons -->
+  <div class="amount-buttons">
+    <button class="amount-btn">₹500</button>
+    <button class="amount-btn">₹1000</button>
+    <button class="amount-btn">₹2500</button>
+    <button class="amount-btn">₹5000</button>
+    <button class="amount-btn custom">Custom</button>
+  </div>
+
+  <!-- Form -->
+  <form action="#" method="post" class="donate-form">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="email" name="email" placeholder="Email Address" required>
+    <input type="number" name="amount" placeholder="Enter Amount (₹)" required>
+    <textarea name="message" rows="4" placeholder="Message (optional)"></textarea>
+    <button type="submit" class="btn-donate">Proceed to Donate</button>
+  </form>
+</section>
+
+{% endblock %}

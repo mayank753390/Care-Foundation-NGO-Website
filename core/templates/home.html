@@ -1,0 +1,432 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(rgba(0,128,128,0.7), rgba(0,128,128,0.7)), 
+                url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center/cover;
+    color: white;
+    text-align: center;
+    padding: 160px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero h1 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    opacity: 0;
+    animation: fadeInDown 1.2s forwards;
+  }
+  .hero span {
+    color: #FFD700;
+  }
+  .hero p {
+    font-size: 1.3rem;
+    margin: 20px 0;
+    opacity: 0;
+    animation: fadeInUp 1.5s forwards;
+    animation-delay: .5s;
+  }
+  .hero a {
+    padding: 12px 28px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin: 10px;
+    text-decoration: none;
+    transition: 0.3s;
+    display: inline-block;
+    opacity: 0;
+    animation: fadeIn 1.8s forwards;
+    animation-delay: 1s;
+  }
+  .btn-primary {
+    background: #FFD700;
+    color: #000;
+  }
+  .btn-primary:hover {
+    background: #e6c200;
+  }
+  .btn-outline {
+    border: 2px solid #FFD700;
+    color: #FFD700;
+    background: transparent;
+  }
+  .btn-outline:hover {
+    background: #FFD700;
+    color: #000;
+  }
+
+  /* Animations */
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Gallery Slider */
+  .slider {
+    position: relative;
+    max-width: 1200px;
+    margin: 50px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+  .slides {
+    position: relative;
+  }
+  .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+  }
+  .slide.active {
+    opacity: 1;
+    position: relative;
+  }
+  .slide img {
+    width: 100%;
+    height: 400px;        /* Desktop ke liye fixed height */
+    object-fit: cover;    /* thoda crop but zoom balanced */
+    display: block;
+    border-radius: 12px;
+  }
+  .caption {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 0 0 12px 12px;
+  }
+  .dots {
+    text-align: center;
+    margin-top: 15px;
+  }
+  .dot {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    background: #bbb;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .active-dot {
+    background: #008080;
+  }
+
+  /* Testimonials */
+  .testimonials {
+    background: #f8ffff;
+    padding: 80px 20px;
+    text-align: center;
+  }
+  .testimonials h2 {
+    font-size: 2.5rem;
+    color: #008080;
+    margin-bottom: 40px;
+  }
+  .testimonial-slider {
+    max-width: 900px;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+  }
+  .testimonial-slides {
+    display: flex;
+    transition: transform 0.6s ease-in-out;
+  }
+  .testimonial-card {
+    min-width: 100%;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    font-style: italic;
+    transition: transform 0.4s;
+  }
+  .testimonial-card:hover {
+    transform: scale(1.03);
+  }
+  .testimonial-card h4 {
+    margin-top: 15px;
+    color: #008080;
+    font-weight: 600;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .hero {
+      padding: 100px 20px;
+      background-position: center;
+    }
+    .hero h1 {
+      font-size: 2rem;
+    }
+    .hero p {
+      font-size: 1rem;
+    }
+    .hero a {
+      padding: 10px 20px;
+      font-size: 0.9rem;
+    }
+
+    .slider {
+      margin: 30px 15px;
+    }
+    .slide img {
+      height: auto;          /* auto height */
+      object-fit: contain;   /* mobile me image full visible */
+    }
+
+    .testimonials {
+      padding: 50px 15px;
+    }
+    .testimonials h2 {
+      font-size: 1.8rem;
+    }
+    .testimonial-card {
+      padding: 20px;
+      font-size: 0.95rem;
+    }
+  }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <h1>Choose To Make A<br><span class="highlight">Difference</span> Today!</h1>
+  </div>
+  
+  <div class="hero-widget-container">
+    <div class="donation-widget">
+      {% if messages %}
+        {% for message in messages %}
+          <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 15px;">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+      <form method="POST" action="{% url 'process_donation' %}">
+        {% csrf_token %}
+        <input type="hidden" name="frequency" id="frequencyInput" value="Give Once">
+        
+        <div class="citizenship-toggle">
+          <label class="radio-option">
+            <input type="radio" name="citizenship" value="indian" checked>
+            <div class="custom-radio"></div>
+            Indian
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="citizenship" value="foreign">
+            <div class="custom-radio"></div>
+            Foreign
+          </label>
+        </div>
+
+        <div class="donation-type-toggle">
+          <button type="button" class="type-btn active" id="giveOnceBtn">Give Once</button>
+          <button type="button" class="type-btn" id="giveMonthlyBtn">Give Monthly</button>
+        </div>
+
+        <label class="amount-label">Please select your donation amount <span>(*1 Meal | ₹ 25/-)</span></label>
+        
+        <div class="amount-grid">
+          <button type="button" class="amount-btn">₹50000</button>
+          <button type="button" class="amount-btn">₹25000</button>
+          <button type="button" class="amount-btn">₹10000</button>
+          <button type="button" class="amount-btn">₹5000</button>
+          <button type="button" class="amount-btn">₹2500</button>
+          <button type="button" class="amount-btn">₹1000</button>
+        </div>
+
+        <input type="number" name="amount" id="customAmountInput" class="custom-amount-input" placeholder="Enter amount" required>
+        
+        <div class="pledge-text">
+          You Pledge to serve <span id="mealCount">0</span> nutritious meals.
+        </div>
+
+        <div class="payment-logos">
+          <img src="/static/images/payment_logos.png" alt="Payment Methods">
+          <p>We accept all major payment methods</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 15px;">
+          <button type="submit" class="btn-donate" style="width: 100%; justify-content: center; font-size: 16px; padding: 12px; background-color: #43b049;">Proceed to Donate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Empower Section -->
+<section class="empower-section">
+  <h2>Online Donations To Empower Hope In India</h2>
+</section>
+
+<!-- Floating Button -->
+<a href="#" class="floating-btn">
+  <i class="fas fa-phone-alt"></i>
+</a>
+
+<!-- Gallery Slider -->
+<section>
+  <h2 style="text-align:center; font-size:2.5rem; color:#008080; margin:60px 0 30px;">Our Work in Action</h2>
+  
+  <div class="slider">
+    <div class="slides">
+      <div class="slide active">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80" alt="">
+        <div class="caption">Education Support</div>
+      </div>
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1584516150909-c43483ee7932?auto=format&fit=crop&w=800&q=80" alt="">
+        <div class="caption">Health Camp</div>
+      </div>
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=800&q=80" alt="">
+        <div class="caption">Food Distribution</div>
+      </div>
+      <div class="slide">
+        <img src="https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?auto=format&fit=crop&w=800&q=80" alt="">
+        <div class="caption">Community Work</div>
+      </div>
+    </div>
+  </div>
+  <div class="dots"></div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+  <h2>What People Say</h2>
+  <div class="testimonial-slider">
+    <div class="testimonial-slides">
+      <div class="testimonial-card">
+        <p>"Mayank Care Foundation has changed so many lives. Proud to support them!"</p>
+        <h4>- Abhishek</h4>
+      </div>
+      <div class="testimonial-card">
+        <p>"A genuine NGO working for children and education. Highly recommended."</p>
+        <h4>- Yash</h4>
+      </div>
+      <div class="testimonial-card">
+        <p>"They are bringing real hope to rural communities. Keep it up!"</p>
+        <h4>- Raman</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Fade Slider
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.querySelector('.dots');
+  let index = 0;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
+    if (i === 0) dot.classList.add('active-dot');
+    dot.addEventListener('click', () => {
+      index = i;
+      updateSlider();
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll('.dot');
+
+  function updateSlider() {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('active');
+      dots[i].classList.remove('active-dot');
+    });
+    slides[index].classList.add('active');
+    dots[index].classList.add('active-dot');
+  }
+
+  setInterval(() => {
+    index = (index + 1) % slides.length;
+    updateSlider();
+  }, 4000);
+
+  // Testimonials slider
+  const testimonialSlides = document.querySelector('.testimonial-slides');
+  const totalTestimonial = testimonialSlides.children.length;
+  let tIndex = 0;
+
+  setInterval(() => {
+    tIndex = (tIndex + 1) % totalTestimonial;
+    testimonialSlides.style.transform = `translateX(-${tIndex * 100}%)`;
+  }, 5000);
+</script>
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Donation Type Toggle
+    const giveOnceBtn = document.getElementById('giveOnceBtn');
+    const giveMonthlyBtn = document.getElementById('giveMonthlyBtn');
+    const frequencyInput = document.getElementById('frequencyInput');
+    
+    giveOnceBtn.addEventListener('click', () => {
+      giveOnceBtn.classList.add('active');
+      giveMonthlyBtn.classList.remove('active');
+      frequencyInput.value = 'Give Once';
+    });
+    
+    giveMonthlyBtn.addEventListener('click', () => {
+      giveMonthlyBtn.classList.add('active');
+      giveOnceBtn.classList.remove('active');
+      frequencyInput.value = 'Give Monthly';
+    });
+
+    // Amount Grid Selection
+    const amountBtns = document.querySelectorAll('.amount-btn');
+    const customAmountInput = document.getElementById('customAmountInput');
+    const mealCount = document.getElementById('mealCount');
+
+    function updateMeals(amount) {
+      const meals = Math.floor(amount / 25);
+      mealCount.textContent = meals || 0;
+    }
+
+    amountBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        amountBtns.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        const amount = btn.textContent.replace('₹', '');
+        customAmountInput.value = amount;
+        updateMeals(amount);
+      });
+    });
+
+    customAmountInput.addEventListener('input', (e) => {
+      amountBtns.forEach(b => b.classList.remove('selected'));
+      updateMeals(e.target.value);
+    });
+  });
+</script>
+{% endblock %}
+
+{% endblock %}

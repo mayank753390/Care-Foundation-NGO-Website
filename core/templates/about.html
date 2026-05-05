@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  /* Hero Section */
+  .about-hero {
+    background: linear-gradient(rgba(0,128,128,0.7), rgba(0,128,128,0.5)),
+                url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1470&q=80');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+    border-radius: 15px;
+    margin-bottom: 60px;
+  }
+
+  .about-hero h2 {
+    font-size: 3rem;
+    font-weight: 700;
+  }
+
+  .about-hero p {
+    font-size: 1.2rem;
+    margin-top: 15px;
+  }
+
+  /* Cards Layout */
+  .info-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 50px;
+  }
+
+  .info-card {
+    flex: 1 1 280px;
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .info-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  }
+
+  .info-card .icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #00b3b3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    font-size: 1.8rem;
+    color: white;
+  }
+
+  .info-card h4 {
+    margin-bottom: 10px;
+    color: #008080;
+    font-weight: 600;
+  }
+
+  .info-card p {
+    font-size: 1rem;
+    color: #555;
+  }
+
+  /* Closing Note */
+  .closing-note {
+    text-align: center;
+    margin: 60px 0;
+  }
+
+  .closing-note a {
+    margin-top: 15px;
+    display: inline-block;
+  }
+
+  @media(max-width: 768px){
+    .about-hero h2 { font-size: 2.2rem; }
+    .about-hero p { font-size: 1rem; }
+  }
+</style>
+
+<!-- Hero -->
+<div class="about-hero">
+  <h2>About <span style="color: #FFD700;">Mayank Care Foundation</span></h2>
+  <p>Empowering communities through education, healthcare, environment, and social welfare.</p>
+</div>
+
+<!-- Info Cards: Mission, Vision, Core Values -->
+<div class="container">
+  <div class="info-cards">
+    <div class="info-card" data-aos="fade-up">
+      <div class="icon">🚀</div>
+      <h4>Our Mission</h4>
+      <p>Uplift underserved communities by providing education, healthcare, and social welfare programs.</p>
+    </div>
+    <div class="info-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="icon">🌟</div>
+      <h4>Our Vision</h4>
+      <p>Create a world with equal opportunities, essential resources, and resilient communities.</p>
+    </div>
+    <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+      <div class="icon">💎</div>
+      <h4>Our Core Values</h4>
+      <p>Compassion, Integrity, Innovation, Inclusivity, Collaboration – guiding every initiative we take.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Closing Note -->
+<div class="container closing-note" data-aos="zoom-in-up">
+  <p class="fs-5 fw-semibold">
+    Join us in building a world where hope, opportunity, and care reach every corner.  
+    <br>🌟 Together, we can create a brighter future for generations to come. 🌟
+  </p>
+  <a href="/donate" class="btn btn-lg btn-warning rounded-pill shadow">Support Our Mission</a>
+</div>
+
+<!-- AOS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 1200, once: true });
+</script>
+{% endblock %}

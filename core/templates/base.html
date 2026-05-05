@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mayank Care Foundation</title>
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="contact-info">
+      <a href="mailto:write2us@mayankcare.org"><i class="fas fa-envelope"></i> write2us@mayankcare.org</a>
+      <a href="tel:+918928991161"><i class="fas fa-phone-alt"></i> +91 89289 91161</a>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="https://img.icons8.com/color/48/charity.png" alt="logo">
+      <span>Mayank Care <br><span class="subtext">NURTURING HOPE</span></span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About <i class="fas fa-chevron-down" style="font-size: 10px;"></i></a></li>
+        <li class="dropdown-parent">
+          <a href="#">Our Feeding Initiatives <i class="fas fa-chevron-down" style="font-size: 10px;"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Swasthya Ahara</a></li>
+            <li><a href="#">Bal Shiksha Ahara</a></li>
+            <li><a href="#">Paushtik Ahara</a></li>
+            <li><a href="#">Donate for a new Kitchen</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Occasional Donations <i class="fas fa-chevron-down" style="font-size: 10px;"></i></a></li>
+        <li><a href="#">Partner With Us</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+      </ul>
+    </nav>
+    <a href="{% url 'home' %}" class="btn-donate"><i class="fas fa-heart"></i> Donate</a>
+  </header>
+
+  <!-- Page Content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; {% now "Y" %} Mayank Care Foundation. All rights reserved.</p>
+  </footer>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

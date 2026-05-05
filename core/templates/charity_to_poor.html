@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Charity Hero Section -->
+<section class="charity-hero-section hero-section">
+  <div class="hero-content">
+    <h1>Donate To Poor</h1>
+    <p style="font-size: 1.2rem; color: #333; margin-top: 15px; font-weight: 500; max-width: 80%;">
+      Providing free, nutritious lunches daily to those in need at Mumbai's Government hospitals.
+    </p>
+  </div>
+  
+  <div class="hero-widget-container">
+    <div class="donation-widget">
+      {% if messages %}
+        {% for message in messages %}
+          <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 15px;">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+      <form method="POST" action="{% url 'process_donation' %}">
+        {% csrf_token %}
+        <input type="hidden" name="frequency" id="frequencyInput" value="Give Once">
+        
+        <div class="citizenship-toggle">
+          <label class="radio-option">
+            <input type="radio" name="citizenship" value="indian" checked>
+            <div class="custom-radio"></div>
+            Indian
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="citizenship" value="foreign">
+            <div class="custom-radio"></div>
+            Foreign
+          </label>
+        </div>
+
+        <div class="donation-type-toggle">
+          <button type="button" class="type-btn active" id="giveOnceBtn">Give Once</button>
+          <button type="button" class="type-btn" id="giveMonthlyBtn">Give Monthly</button>
+        </div>
+
+        <label class="amount-label">Please select your donation amount <span>(*1 Meal | ₹ 25/-)</span></label>
+        
+        <div class="amount-grid">
+          <button type="button" class="amount-btn">₹50000</button>
+          <button type="button" class="amount-btn">₹25000</button>
+          <button type="button" class="amount-btn">₹10000</button>
+          <button type="button" class="amount-btn">₹5000</button>
+          <button type="button" class="amount-btn">₹2500</button>
+          <button type="button" class="amount-btn">₹1000</button>
+        </div>
+
+        <input type="number" name="amount" id="customAmountInput" class="custom-amount-input" placeholder="Enter amount" required>
+        
+        <div class="pledge-text">
+          You Pledge to serve <span id="mealCount">0</span> nutritious meals.
+        </div>
+
+        <div class="payment-logos">
+          <img src="/static/images/payment_logos.png" alt="Payment Methods">
+          <p>We accept all major payment methods</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 15px;">
+          <button type="submit" class="btn-donate" style="width: 100%; justify-content: center; font-size: 16px; padding: 12px; background-color: #43b049;">Proceed to Donate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Donation Type Toggle
+    const giveOnceBtn = document.getElementById('giveOnceBtn');
+    const giveMonthlyBtn = document.getElementById('giveMonthlyBtn');
+    const frequencyInput = document.getElementById('frequencyInput');
+    
+    giveOnceBtn.addEventListener('click', () => {
+      giveOnceBtn.classList.add('active');
+      giveMonthlyBtn.classList.remove('active');
+      frequencyInput.value = 'Give Once';
+    });
+    
+    giveMonthlyBtn.addEventListener('click', () => {
+      giveMonthlyBtn.classList.add('active');
+      giveOnceBtn.classList.remove('active');
+      frequencyInput.value = 'Give Monthly';
+    });
+
+    // Amount Grid Selection
+    const amountBtns = document.querySelectorAll('.amount-btn');
+    const customAmountInput = document.getElementById('customAmountInput');
+    const mealCount = document.getElementById('mealCount');
+
+    function updateMeals(amount) {
+      const meals = Math.floor(amount / 25);
+      mealCount.textContent = meals || 0;
+    }
+
+    amountBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        amountBtns.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        const amount = btn.textContent.replace('₹', '');
+        customAmountInput.value = amount;
+        updateMeals(amount);
+      });
+    });
+
+    customAmountInput.addEventListener('input', (e) => {
+      amountBtns.forEach(b => b.classList.remove('selected'));
+      updateMeals(e.target.value);
+    });
+  });
+</script>
+{% endblock %}
+
+{% endblock %}

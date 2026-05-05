@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  .section-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 40px 20px;
+    line-height: 1.7;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #008080;
+    font-weight: bold;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  .section-title::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: #008080;
+    margin: 10px auto 0;
+    border-radius: 2px;
+  }
+
+  h3 {
+    color: #006666;
+    margin-top: 25px;
+  }
+
+  p {
+    color: #444;
+    font-size: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul li {
+    background: none;
+    margin: 12px 0;
+    padding: 12px 15px;
+    border-left: 5px solid #008080;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+    transition: 0.3s;
+  }
+
+  ul li:hover {
+    transform: translateX(5px);
+  }
+
+  ul li strong {
+    color: #008080;
+  }
+</style>
+
+<div class="section-container">
+  <h2 class="section-title">🌍 Our Mission & Vision</h2>
+
+  <h3>🚀 Our Mission</h3>
+  <p>
+    At <strong>Mayank Care Foundation</strong>, our mission is to uplift underserved communities by providing sustainable programs in education, healthcare, social welfare, and environmental conservation. We aim to empower individuals with the tools and opportunities they need to achieve self-reliance and holistic well-being.
+  </p>
+
+  <h3>🌟 Our Vision</h3>
+  <p>
+    We envision a world where every person has access to essential resources, equal opportunities, and the freedom to lead a healthy and fulfilling life. Our vision is to foster resilient communities that contribute to a just and sustainable society for current and future generations.
+  </p>
+
+  <h3>🤝 Our Approach</h3>
+  <ul>
+    <li><strong>Empowerment:</strong> Fostering skills and confidence through education and capacity-building initiatives.</li>
+    <li><strong>Inclusivity:</strong> Ensuring programs reach all sections of society, leaving no one behind.</li>
+    <li><strong>Sustainability:</strong> Implementing eco-friendly and sustainable solutions for long-term impact.</li>
+    <li><strong>Collaboration:</strong> Building partnerships with local communities, governments, and other stakeholders to maximize reach and effectiveness.</li>
+    <li><strong>Accountability:</strong> Maintaining transparency, responsibility, and continuous improvement in all our efforts.</li>
+  </ul>
+</div>
+{% endblock %}
